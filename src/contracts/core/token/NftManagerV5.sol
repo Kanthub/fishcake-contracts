@@ -134,15 +134,18 @@ contract NftManagerV5 is
         epicSalmonNftJson = "https://www.fishcake.org/image/5.json";
         legendaryTunaNftJson = "https://www.fishcake.org/image/6.json";
 
+
         uncommonFishcakeNftJson_Used = "https://www.fishcake.org/image/7.json";
         rareShrimpNftJson_Used = "https://www.fishcake.org/image/8.json";
         epicSalmonNftJson_Used = "https://www.fishcake.org/image/9.json";
         legendaryTunaNftJson_Used = "https://www.fishcake.org/image/10.json";
 
+
         feManagerAddress = IFishcakeEventManager(_feManagerAddress);
         stakingManagerAddress = IStakingManager(_stakingManagerAddress);
         boosterAddress = _boosterAddress;
     }
+
 
     function mintBoosterNFT() external nonReentrant returns (bool, uint256) {
         uint256 mineFishCakePower = feManagerAddress.getMinedFishcakePower(
@@ -150,10 +153,12 @@ contract NftManagerV5 is
         );
         if (mineFishCakePower < 30 * 1e6) {
             revert MineAmountNotEnough(mineFishCakePower);
+
         }
 
         uint256 usedFishCakePower;
         uint256 boosterTokenId = _nextTokenId++;
+
         _safeMint(msg.sender, boosterTokenId);
         uint256 decimal = 1e6;
         if (
@@ -170,6 +175,7 @@ contract NftManagerV5 is
             mineFishCakePower >= 300 * decimal &&
             mineFishCakePower < 1500 * decimal
         ) {
+
             nftMintType[boosterTokenId] = 5;
         } else {
             nftMintType[boosterTokenId] = 6;
@@ -289,6 +295,7 @@ contract NftManagerV5 is
             return epicSalmonNftJson;
         } else if (nftType == 6) {
             return legendaryTunaNftJson;
+
         } else if (nftType == 7) {
             return uncommonFishcakeNftJson_Used;
         } else if (nftType == 8) {
@@ -297,9 +304,19 @@ contract NftManagerV5 is
             return epicSalmonNftJson_Used;
         } else if (nftType == 10) {
             return legendaryTunaNftJson_Used;
+
         } else {
             return "";
         }
+        // } else if (nftType == 3 + 10) {
+        //     return uncommonFishcakeNftJson_Used;
+        // } else if (nftType == 4 + 10) {
+        //     return rareShrimpNftJson_Used;
+        // } else if (nftType == 5 + 10) {
+        //     return epicSalmonNftJson_Used;
+        // } else if (nftType == 6 + 10) {
+        //     return legendaryTunaNftJson_Used;
+        // }
     }
 
     function uri(
@@ -382,9 +399,11 @@ contract NftManagerV5 is
         address _miner
     ) external onlyStakingManager {
         uint256 activeNftId = minerActiveNft[_miner];
+
         if (activeNftId >= 3 && activeNftId <= 6) {
             nftMintType[activeNftId] += 4;
         }
+
     }
 
     function getActiveMinerBoosterNft(
