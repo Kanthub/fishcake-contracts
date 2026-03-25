@@ -52,5 +52,7 @@ abstract contract StakingManagerStorage is IStakingManager {
 
     mapping(address => mapping(bytes32 => stakeHolderStakingInfo)) stakingQueued;
 
-    uint256[100] private __gap;
+    uint256 public baseApr; // basic Apr, multiplied by 1, for example, 10% is 10
+
+    uint256[99] private __gap;
 }

@@ -231,7 +231,7 @@ contract StakingManager is
             uint256 baseReward = (stakingAmount * totalRewardApr * lockTime) /
                 (100 * 365 days);
             uint256 extraReward = (stakingAmount *
-                stakingApr *
+                baseApr *
                 (actualStakingDuration - lockTime)) / (100 * 365 days);
             reward = baseReward + extraReward;
         }
@@ -285,6 +285,10 @@ contract StakingManager is
 
     function setHalfAprTimeStamp(uint256 t) public onlyOwner {
         halfAprTimeStamp = t;
+    }
+
+    function setBaseApr(uint256 apr) public onlyOwner {
+        baseApr = apr;
     }
 
     /// @notice 授权升级逻辑合约的函数
