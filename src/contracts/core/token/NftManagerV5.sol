@@ -182,7 +182,7 @@ contract NftManagerV5 is
         );
 
         minerActiveNft[msg.sender] = boosterTokenId;
-        nftOwner[boosterTokenId] = msg.sender;
+        // nftOwner[boosterTokenId] = msg.sender;
 
         minerHistoryBoosterNft[msg.sender].push(boosterTokenId);
 
@@ -386,8 +386,8 @@ contract NftManagerV5 is
         uint256 tokenId
     ) external onlyStakingManager {
         require(
-            nftOwner[tokenId] == _miner || minerActiveNft[_miner] == tokenId,
-            "Invalid tokenId"
+            ownerOf(tokenId) == _miner,
+            "TokenId not authorized for this user"
         );
 
         // uint256 activeNftId = minerActiveNft[_miner];
